@@ -16,9 +16,11 @@ type Inputs = {
 
 type formProps = {
   step: number;
+  handleNext: () => void;
+  handleBack: () => void;
 };
 
-const DataForm = ({ step }: formProps) => {
+const DataForm = ({ step, handleNext, handleBack }: formProps) => {
   const {
     register,
     handleSubmit,
@@ -259,7 +261,7 @@ const DataForm = ({ step }: formProps) => {
         {step === 1 && (
           <div className="col-12 col-md-6 px-0">
             <div className="input-field d-flex flex-column">
-              <button className="btn primary-button">
+              <button onClick={() => handleNext()} className="btn primary-button">
                 <span>Next</span>{" "}
                 <span>
                   <svg
@@ -272,7 +274,7 @@ const DataForm = ({ step }: formProps) => {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
                     ></path>
                   </svg>
@@ -286,7 +288,7 @@ const DataForm = ({ step }: formProps) => {
           <>
             <div className="col-12 col-md-6 px-0">
               <div className="input-field d-flex flex-column">
-                <button className="btn secondary-button">
+                <button onClick={() => handleBack()} className="btn secondary-button">
                   <span>
                     <svg
                       stroke="currentColor"
@@ -298,7 +300,7 @@ const DataForm = ({ step }: formProps) => {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
                       ></path>
                     </svg>
