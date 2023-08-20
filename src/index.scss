@@ -93,12 +93,24 @@ input, textarea {
   }
 }
 
+.btn {
+  &:disabled {
+    background: var(--background-gry);
+    border: 0;
+    cursor: not-allowed;
+  }
+}
+
 .blue-text {
   color: var(--primary-color);
 }
 
 .red-text {
   color: var(--red);
+}
+
+.small-text {
+  font-size: 0.9em;
 }
 // scrollbar
 ::-webkit-scrollbar {
@@ -159,7 +171,7 @@ input, textarea {
 }
 
 .engine-x-topNav {
-  height: 7em;
+  height: 7.5em;
   color: var(--white);
 
   .engine-x-logo {
@@ -168,7 +180,7 @@ input, textarea {
     align-items: center;
 
     svg {
-      font-size: 2em;
+      font-size: 3em;
     }
 
     .title {
@@ -208,7 +220,7 @@ input, textarea {
 
 .content-wrapper {
   section {
-    $section-height: calc(100vh - 12em);
+    $section-height: calc(100vh - 12.5em);
 
     background: var(--white);
     border-bottom-left-radius: 10px;
@@ -225,6 +237,8 @@ input, textarea {
   $row-padding: 0.5em;
   $alignment: center;
   $border-radius: 5px;
+
+  min-width: 32em;
 
   svg {
     font-size: 1.3em;
@@ -272,6 +286,10 @@ input, textarea {
   .nav-tabs {
     .nav-link {
       color: var(--primary-color);
+      
+      &:hover {
+        cursor: default;
+      }
 
       &:not(.active) {
         color: var(--font-color);

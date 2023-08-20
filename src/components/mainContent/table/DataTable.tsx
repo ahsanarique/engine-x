@@ -1,27 +1,38 @@
+import { useContext } from "react";
+import { Context } from "../../../context/Context";
+import { ContextProps } from "../../../context/Context";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
+import { Line } from "react-chartjs-2";
 
 const DataTable = () => {
+  const { projectData, tableData, tableHasData } = useContext(
+    Context
+  ) as ContextProps;
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
-    BarElement,
+    PointElement,
+    LineElement,
     Title,
     Tooltip,
+    Filler,
     Legend
   );
 
   const options = {
     responsive: true,
+
     scales: {
       x: {
         title: {
@@ -36,6 +47,7 @@ const DataTable = () => {
         },
       },
     },
+
     plugins: {
       legend: {
         position: "top" as const,
@@ -47,15 +59,17 @@ const DataTable = () => {
     },
   };
 
-  const labels = ["0", "1", "2", "3", "4", "5", "6"];
+  const labels = tableData.data?.map((item: number[]) => item[0]);
 
   const data = {
     labels,
     datasets: [
       {
+        fill: true,
         label: "Dataset X",
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        data: tableData.data?.map((item: number[]) => item[1]),
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
@@ -67,27 +81,31 @@ const DataTable = () => {
           <div className="border rounded h-100 px-2">
             <div className="table-description">
               <div className="description-block">
-                <h4 className="blue-text">Project 01</h4>
+                <h4 className="blue-text">{projectData[0].projectName}</h4>
               </div>
 
               <div className="description-block">
                 <h5>Description:</h5>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
-                  similique deserunt consectetur sed laboriosam dolorum magnam
-                  sint dolor. Quas, placeat.
+                  {projectData[0].projectDescription
+                    ? projectData[0].projectDescription
+                    : "No description added"}
                 </p>
               </div>
 
               <div className="description-block">
                 <h5>
-                  Client: <span className="fw-normal">Client Name</span>
+                  Client:{" "}
+                  <span className="fw-normal">{projectData[0].clientName}</span>
                 </h5>
               </div>
 
               <div className="description-block">
                 <h5>
-                  Contractor: <span className="fw-normal">Contractor Name</span>
+                  Contractor:{" "}
+                  <span className="fw-normal">
+                    {projectData[0].contractorName}
+                  </span>
                 </h5>
               </div>
             </div>
@@ -97,191 +115,41 @@ const DataTable = () => {
         <div className="col-12 col-lg-6 px-1 py-1">
           <div className="border rounded h-100 px-2">
             <div className="engine-x-chart">
-              <Bar options={options} data={data} />
+              <Line options={options} data={data} />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="row mx-0 table-head sticky-top mt-3">
-        <div className="col-3 head-cell">
-          <div className="d-flex align-items-center justify-content-center">
-            <span>KP</span>
+      {tableHasData ? (
+        <>
+          <div className="row mx-0 table-head sticky-top mt-3">
+            {tableData.header.map((tableTitle: string) => {
+              return (
+                <div key={tableTitle} className="col-3 head-cell">
+                  <div className="d-flex align-items-center justify-content-center">
+                    <span>{tableTitle}</span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </div>
 
-        <div className="col-3 head-cell">
-          <div className="d-flex align-items-center justify-content-center">
-            <span>X</span>
-          </div>
-        </div>
-
-        <div className="col-3 head-cell">
-          <div className="d-flex align-items-center justify-content-center">
-            <span>Y</span>
-          </div>
-        </div>
-
-        <div className="col-3 head-cell">
-          <div className="d-flex align-items-center justify-content-center">
-            <span>Z</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">5852812.70</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
-
-      <div className="row mx-0 table-data">
-        <div className="col-3 data-cell">0</div>
-        <div className="col-3 data-cell">585281.709</div>
-        <div className="col-3 data-cell">2108892.92</div>
-        <div className="col-3 data-cell">3.56</div>
-      </div>
+          {tableData.data.map((item: number[], index: number) => {
+            return (
+              <div key={item[0] + index} className="row mx-0 table-data">
+                {item.map((value: number, index: number) => (
+                  <div key={value + index} className="col-3 data-cell">
+                    {value}
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <h2 className="text-center mt-2">No data added</h2>
+      )}
     </div>
   );
 };

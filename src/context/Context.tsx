@@ -1,36 +1,79 @@
-import {FC, useState, useEffect, createContext, ReactNode } from "react";
-import {dataTypeAll } from "../utils/typeDefs";
+import { FC, useState, useEffect, createContext, ReactNode } from "react";
+import { typeMinMaxData, typeProjectData } from "../utils/typeDefs";
 
-interface ContextProps {
-    data: dataTypeAll[];
-    setData: (value: dataTypeAll[]) => void;
+export interface ContextProps {
+  minMax: typeMinMaxData[];
+  setMinMax: (value: typeMinMaxData[]) => void;
+  projectData: typeProjectData[];
+  setProjectData: (value: typeProjectData[]) => void;
+  tableData: any;
+  setTableData: (value: any) => void;
+  tableHasData: boolean;
+  setTableHasData: (value: boolean) => void;
 }
 
 const Context = createContext<ContextProps | null>(null);
 
 interface ContextProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
-const dummy: dataTypeAll[] = [{
-    id: 1,
-    title: "Kp",
-    data: [{id: "Kp1", value: 12563.7534}, {id: "kp2", value: 12563.7534}]
-}]
+const ContextProvider: FC<ContextProviderProps> = ({ children }) => {
+  const projectPlaceholder = [
+    {
+      projectName: "",
+      projectDescription: "",
+      clientName: "",
+      contractorName: "",
+    },
+  ];
 
-const ContextProvider: FC<ContextProviderProps> = ({children}) => {
-    const [data, setData] = useState<dataTypeAll[] | []>([]);
+  const minMaxPlaceholder = [
+    {
+      title: "X",
+      minValue: undefined,
+      maxValue: undefined,
+    },
+    {
+      title: "Y",
+      minValue: undefined,
+      maxValue: undefined,
+    },
+    {
+      title: "Z",
+      minValue: undefined,
+      maxValue: undefined,
+    },
+  ];
 
-    useEffect(() => {
-        setData(dummy)
-    }, [])
+  const [minMax, setMinMax] = useState<typeMinMaxData[]>(minMaxPlaceholder);
+  const [projectData, setProjectData] =
+    useState<typeProjectData[]>(projectPlaceholder);
+  const [tableData, setTableData] = useState<any>([]);
+  const [tableHasData, setTableHasData] = useState<boolean>(false);
 
+  useEffect(() => {
+    if(tableData.header && tableData.data) {
+      setTableHasData(true);
+    }
+  }, [tableData.header, tableData.data]);
 
-    return (
-        <Context.Provider value={{data, setData}}>
-            {children}
-        </Context.Provider>
-    )
-}
+  return (
+    <Context.Provider
+      value={{
+        minMax,
+        setMinMax,
+        projectData,
+        setProjectData,
+        tableData,
+        setTableData,
+        tableHasData,
+        setTableHasData
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
+};
 
-export {ContextProvider, Context};
+export { ContextProvider, Context };

@@ -1,9 +1,15 @@
+import { useContext } from "react";
+import { Context } from "../../context/Context";
+import { ContextProps } from "../../context/Context";
 import html2pdf from "html2pdf.js";
 import DataTable from "../../components/mainContent/table/DataTable";
 
 const ResultPage = () => {
+  const { tableHasData } = useContext(Context) as ContextProps;
+
   const generatePdf = async () => {
     const element = document.getElementById("pdf-section");
+
     if (!element) {
       console.error("PDF section not found.");
       return;
@@ -34,6 +40,7 @@ const ResultPage = () => {
             <button
               onClick={generatePdf}
               className="btn primary-button ms-auto d-flex align-items-center"
+              disabled={!tableHasData}
             >
               <span>
                 <svg

@@ -1,9 +1,17 @@
-
-export type dataTypeAll = {
-    id: number | string;
+export type typeMinMaxData = {
     title: string;
-    data: {
-        id: number | string;
-        value: number | string
-    }[];
+    minValue: number | undefined;
+    maxValue: number | undefined;
+}
+
+export type typeProjectData = {
+    projectName: string;
+    projectDescription?: string;
+    clientName: string;
+    contractorName: string;
+}
+
+export type typeTableData = {
+    header: string[];
+    data: number[][];
 }
