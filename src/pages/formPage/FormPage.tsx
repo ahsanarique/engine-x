@@ -26,12 +26,12 @@ const FormPage = () => {
         <div className="col-12 mt-3">
           <ul className="nav nav-tabs" id="myTab" role="tablist">
             <li className="nav-item" role="presentation">
-              <button className={`nav-link ${step === 1 ? "active" : ""}`}>
+              <button className={`nav-link ${step === 1 ? "active" : ""}`} disabled>
                 Step 1
               </button>
             </li>
             <li className="nav-item" role="presentation">
-              <button className={`nav-link ${step === 2 ? "active" : ""}`}>
+              <button className={`nav-link ${step === 2 ? "active" : ""}`} disabled>
                 Step 2
               </button>
             </li>
