@@ -1,35 +1,18 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import { Context } from "../../context/Context";
 import { ContextProps } from "../../context/Context";
-import html2pdf from "html2pdf.js";
 import DataTable from "../../components/mainContent/table/DataTable";
 
 const ResultPage = () => {
   const { tableHasData } = useContext(Context) as ContextProps;
 
-  const generatePdf = async () => {
-    const element = document.getElementById("pdf-section");
+  const pdfRef = useRef(null);
 
-    if (!element) {
-      console.error("PDF section not found.");
-      return;
-    }
-
-    const pdfOptions = {
-      margin: 10,
-      filename: "table-data.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-
-    try {
-      const pdf = html2pdf().from(element).set(pdfOptions);
-      pdf.save();
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    }
-  };
+  const generatePdf = useReactToPrint({
+    content: () => pdfRef.current,
+    documentTitle: "table-data",
+  });
 
   return (
     <section className="engine-x-resultPage">
@@ -38,7 +21,7 @@ const ResultPage = () => {
           <div className="d-flex align-items-center mt-3">
             <h1 className="page-title">Project Data</h1>
             <button
-              onClick={generatePdf}
+              onClick={() => generatePdf()}
               className="btn primary-button ms-auto d-flex align-items-center"
               disabled={!tableHasData}
             >
@@ -61,7 +44,7 @@ const ResultPage = () => {
         </div>
 
         <div className="col-12">
-          <div className="mt-3" id="pdf-section">
+          <div ref={pdfRef} className="mt-3 w-100" id="pdf-section">
             <DataTable />
           </div>
         </div>

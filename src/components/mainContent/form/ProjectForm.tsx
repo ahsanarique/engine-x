@@ -37,7 +37,6 @@ const ProjectForm = ({ step, handleNext, disabled }: formProps) => {
 
     if (newProjectData[0].projectName !== "") {
       setProjectData(newProjectData);
-      //sessionStorage.setItem("projectData", JSON.stringify(newProjectData));
       handleNext();
     }
   };

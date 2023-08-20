@@ -77,7 +77,7 @@ const DataTable = () => {
   return (
     <div className="engine-x-dataTable">
       <div className="row mx-0">
-        <div className="col-12 col-lg-6 px-1 py-1">
+        <div className="col-12 px-1 py-1">
           <div className="border rounded h-100 px-2">
             <div className="table-description">
               <div className="description-block">
@@ -112,7 +112,7 @@ const DataTable = () => {
           </div>
         </div>
 
-        <div className="col-12 col-lg-6 px-1 py-1">
+        <div className="col-12 px-1 py-1">
           <div className="border rounded h-100 px-2">
             <div className="engine-x-chart">
               <Line options={options} data={data} />
@@ -148,7 +148,7 @@ const DataTable = () => {
           })}
         </>
       ) : (
-        <h2 className="text-center mt-2">No data added</h2>
+        <h2 className="text-center mt-2">No data added. Upload a .csv file to see the data here.</h2>
       )}
     </div>
   );

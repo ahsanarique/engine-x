@@ -63,7 +63,6 @@ const DataForm = ({ step }: formProps) => {
     };
 
     setTableData(updatedTableData);
-    sessionStorage.setItem("tableData", JSON.stringify(updatedTableData));
   };
 
   const handleFileChange = async (
@@ -140,11 +139,6 @@ const DataForm = ({ step }: formProps) => {
     });
   };
 
-  console.log(
-    !Number(minMax.filter((data) => data.title === "X")[0].minValue),
-    minMax.filter((data) => data.title === "X")[0].minValue
-  );
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -155,7 +149,7 @@ const DataForm = ({ step }: formProps) => {
                 <div className="col-12 px-0">
                   <div className="input-field d-flex flex-column">
                     <label htmlFor="file">
-                      <span className="red-text pb-2">*</span>Upload File (.csv
+                      Upload File (.csv
                       format){" "}
                       {errors.file && (
                         <span className="red-text">{errors.file.message}</span>
@@ -196,19 +190,9 @@ const DataForm = ({ step }: formProps) => {
                                 .minValue
                             ),
                           })}
-                          onChange={(e) => {
-                            const newMinMaxData = [...minMax].map(
-                              (item: typeMinMaxData) => {
-                                if (item.title === "X") {
-                                  item.minValue = Number(e.target.value);
-                                }
 
-                                return item;
-                              }
-                            );
-                            setMinMax(newMinMaxData);
-                            console.log(minMax);
-                          }}
+                          disabled={minMax.filter((data) => data.title === "X")[0]
+                          .minValue ? true : false}
                         />
                       </div>
                     </div>
@@ -234,18 +218,9 @@ const DataForm = ({ step }: formProps) => {
                                 .maxValue
                             ),
                           })}
-                          onChange={(e) => {
-                            const newMinMaxData = [...minMax].map(
-                              (item: typeMinMaxData) => {
-                                if (item.title === "X") {
-                                  item.maxValue = Number(e.target.value);
-                                }
 
-                                return item;
-                              }
-                            );
-                            setMinMax(newMinMaxData);
-                          }}
+                          disabled={minMax.filter((data) => data.title === "X")[0]
+                          .maxValue ? true : false}
                         />
                       </div>
                     </div>
@@ -273,18 +248,9 @@ const DataForm = ({ step }: formProps) => {
                                 .minValue
                             ),
                           })}
-                          onChange={(e) => {
-                            const newMinMaxData = [...minMax].map(
-                              (item: typeMinMaxData) => {
-                                if (item.title === "Y") {
-                                  item.minValue = Number(e.target.value);
-                                }
 
-                                return item;
-                              }
-                            );
-                            setMinMax(newMinMaxData);
-                          }}
+                          disabled={minMax.filter((data) => data.title === "Y")[0]
+                          .minValue ? true : false}
                         />
                       </div>
                     </div>
@@ -310,18 +276,9 @@ const DataForm = ({ step }: formProps) => {
                                 .maxValue
                             ),
                           })}
-                          onChange={(e) => {
-                            const newMinMaxData = [...minMax].map(
-                              (item: typeMinMaxData) => {
-                                if (item.title === "Y") {
-                                  item.maxValue = Number(e.target.value);
-                                }
 
-                                return item;
-                              }
-                            );
-                            setMinMax(newMinMaxData);
-                          }}
+                          disabled={minMax.filter((data) => data.title === "Y")[0]
+                          .maxValue ? true : false}
                         />
                       </div>
                     </div>
@@ -349,18 +306,9 @@ const DataForm = ({ step }: formProps) => {
                                 .minValue
                             ),
                           })}
-                          onChange={(e) => {
-                            const newMinMaxData = [...minMax].map(
-                              (item: typeMinMaxData) => {
-                                if (item.title === "Z") {
-                                  item.minValue = Number(e.target.value);
-                                }
 
-                                return item;
-                              }
-                            );
-                            setMinMax(newMinMaxData);
-                          }}
+                          disabled={minMax.filter((data) => data.title === "Z")[0]
+                          .minValue ? true : false}
                         />
                       </div>
                     </div>
@@ -386,18 +334,9 @@ const DataForm = ({ step }: formProps) => {
                                 .maxValue
                             ),
                           })}
-                          onChange={(e) => {
-                            const newMinMaxData = [...minMax].map(
-                              (item: typeMinMaxData) => {
-                                if (item.title === "Z") {
-                                  item.maxValue = Number(e.target.value);
-                                }
 
-                                return item;
-                              }
-                            );
-                            setMinMax(newMinMaxData);
-                          }}
+                          disabled={minMax.filter((data) => data.title === "Z")[0]
+                          .maxValue ? true: false}
                         />
                       </div>
                     </div>
